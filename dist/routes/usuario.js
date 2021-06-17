@@ -96,4 +96,18 @@ userRoutes.post('/update', autenticacion_1.verificaToken, (req, res) => {
         });
     });
 });
+userRoutes.delete('/delete', (req, res) => {
+    const body = req.body._id;
+    usuario_model_1.Usuario.findByIdAndDelete({ _id: body }).then(result => {
+        res.json({
+            ok: true,
+            mensaje: 'Registro eliminado'
+        });
+    }).catch(error => {
+        res.json({
+            ok: false,
+            mensaje: 'Registro no encontrado'
+        });
+    });
+});
 exports.default = userRoutes;
