@@ -7,12 +7,14 @@ const server_1 = __importDefault(require("./classes/server"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
+const credito_1 = __importDefault(require("./routes/credito"));
 const server = new server_1.default();
 //Body parser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 //Rutas de mi app
 server.app.use('/user', usuario_1.default);
+server.app.use('/credito', credito_1.default);
 //Conectar la BD
 const uri = "mongodb+srv://Jondalar:e9mKFiwdcmSD8262@torostkw.iaq0g.mongodb.net/TorosTKW?retryWrites=true&w=majority";
 mongoose_1.default.connect(uri, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
