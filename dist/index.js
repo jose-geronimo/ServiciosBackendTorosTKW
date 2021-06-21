@@ -9,6 +9,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
 const credito_1 = __importDefault(require("./routes/credito"));
 const abono_1 = __importDefault(require("./routes/abono"));
+const clientes_1 = __importDefault(require("./routes/clientes"));
 const server = new server_1.default();
 //Body parser
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -17,6 +18,7 @@ server.app.use(body_parser_1.default.json());
 server.app.use('/user', usuario_1.default);
 server.app.use('/credito', credito_1.default);
 server.app.use('/abono', abono_1.default);
+server.app.use('/cliente', clientes_1.default);
 //Conectar la BD
 const uri = "mongodb+srv://Jondalar:e9mKFiwdcmSD8262@torostkw.iaq0g.mongodb.net/TorosTKW?retryWrites=true&w=majority";
 mongoose_1.default.connect(uri, { useNewUrlParser: true, useCreateIndex: true }, (err) => {

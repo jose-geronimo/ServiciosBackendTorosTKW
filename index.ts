@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import userRoutes  from './routes/usuario';
 import creditoRoutes  from './routes/credito';
-import abonoRoutes from './routes/abono'
+import abonoRoutes from './routes/abono';
+import clienteRoutes from './routes/clientes';
 
 const server = new Server();
 
@@ -15,6 +16,7 @@ server.app.use( bodyParser.json() );
 server.app.use('/user', userRoutes)
 server.app.use('/credito', creditoRoutes)
 server.app.use('/abono', abonoRoutes)
+server.app.use('/cliente', clienteRoutes)
 
 //Conectar la BD
 const uri =

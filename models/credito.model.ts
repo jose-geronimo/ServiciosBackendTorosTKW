@@ -1,5 +1,4 @@
 import { model, Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
 
 const creditoSchema: Schema<ICredito> = new Schema({
     folio:{
@@ -8,7 +7,6 @@ const creditoSchema: Schema<ICredito> = new Schema({
     },
     RGI:{
         type: String,
-        unique: true,
         required: [true, 'El RGI es requerido']
     },
     nombre:{
@@ -29,16 +27,6 @@ const creditoSchema: Schema<ICredito> = new Schema({
     },
 });
 
-creditoSchema.method('compararPassword', function( password: string = ''): boolean {
-
-    if (  bcrypt.compareSync( password, this.password ) ) {
-        return true;
-    } else {
-        return false;
-    }
-
-});
-
 interface ICredito extends Document{
     folio: string;
     RGI: string;
@@ -46,7 +34,6 @@ interface ICredito extends Document{
     total: string;
     fecha: string;
     concepto: string;
-    compararPassword(password:string):boolean;
 }
 
 export const Credito = model<ICredito>('Credito', creditoSchema);
