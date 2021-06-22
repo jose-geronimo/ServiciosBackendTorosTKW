@@ -3,6 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const clientes_model_1 = require("../models/clientes.model");
 const clienteRoutes = express_1.Router();
+clienteRoutes.get('/clientes', (req, res) => {
+    clientes_model_1.Clientes.find()
+        .then(results => {
+        res.json({
+            results: results
+        });
+    }).catch(error => console.error(error));
+});
 //CREAR UN CLIENTE
 clienteRoutes.post('/add', (req, res) => {
     const client = {

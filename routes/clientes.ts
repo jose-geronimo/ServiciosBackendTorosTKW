@@ -3,6 +3,17 @@ import { Clientes } from '../models/clientes.model';
 import { verificaToken } from '../middlewares/autenticacion';
 
 const clienteRoutes = Router();
+
+clienteRoutes.get('/clientes', (req, res) => {
+    Clientes.find()
+        .then(results => {
+            res.json({
+                results: results
+            });
+        }).catch(error => console.error(error));
+});
+
+
 //CREAR UN CLIENTE
 clienteRoutes.post('/add', (req, res) => {
     const client = {
