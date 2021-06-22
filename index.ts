@@ -17,7 +17,7 @@ server.app.use('/user', userRoutes)
 server.app.use('/credito', creditoRoutes)
 server.app.use('/abono', abonoRoutes)
 server.app.use('/cliente', clienteRoutes)
-server.app.use((req, res, next) => {
+server.app.all("*", (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');

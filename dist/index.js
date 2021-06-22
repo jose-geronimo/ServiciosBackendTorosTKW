@@ -20,7 +20,7 @@ server.app.use('/user', usuario_1.default);
 server.app.use('/credito', credito_1.default);
 server.app.use('/abono', abono_1.default);
 server.app.use('/cliente', clientes_1.default);
-server.app.use((req, res, next) => {
+server.app.all("*", (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
