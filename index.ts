@@ -7,7 +7,7 @@ import abonoRoutes from './routes/abono';
 import clienteRoutes from './routes/clientes';
 
 const server = new Server();
-
+const cors = require('cors');
 //Body parser
 server.app.use( bodyParser.urlencoded({ extended: true }));
 server.app.use( bodyParser.json() );
@@ -17,6 +17,14 @@ server.app.use('/user', userRoutes)
 server.app.use('/credito', creditoRoutes)
 server.app.use('/abono', abonoRoutes)
 server.app.use('/cliente', clienteRoutes)
+server.app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
+server.app.use(cors());
 
 //Conectar la BD
 const uri =
