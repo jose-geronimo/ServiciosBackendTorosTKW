@@ -1,10 +1,12 @@
-import Server from './classes/server';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import userRoutes  from './routes/usuario';
-import creditoRoutes  from './routes/credito';
+import Server from './classes/server';
 import abonoRoutes from './routes/abono';
+import ventasRoutes from './routes/ventas';
+import userRoutes  from './routes/usuario';
 import clienteRoutes from './routes/clientes';
+import creditoRoutes  from './routes/credito';
+import inventarioRoutes from './routes/inventario';
 
 const server = new Server();
 const cors = require('cors');
@@ -17,6 +19,8 @@ server.app.use('/user', userRoutes)
 server.app.use('/credito', creditoRoutes)
 server.app.use('/abono', abonoRoutes)
 server.app.use('/cliente', clienteRoutes)
+server.app.use('/inventario', inventarioRoutes)
+server.app.use('/ventas', ventasRoutes)
 server.app.all("*", (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');

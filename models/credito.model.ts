@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 const creditoSchema: Schema<ICredito> = new Schema({
-    folio:{
+    Folio:{
         type: String,
         required: [true, 'El folio es requerido']
     },
@@ -9,31 +9,31 @@ const creditoSchema: Schema<ICredito> = new Schema({
         type: String,
         required: [true, 'El RGI es requerido']
     },
-    nombre:{
+    Nombre:{
         type: String,
         required: [true, 'El nombre es requerido']
     },
-    total:{
+    Total:{
         type: String,
         required: [true, 'El total es requerido']
     },
-    fecha:{
+    Fecha:{
         type: String,
         required: [true, 'La fecha es requerida']
     },
-    concepto:{
+    Concepto:{
         type: String,
         required: [true, 'El concepto es requerido']
     },
 });
 
 interface ICredito extends Document{
-    folio: string;
+    Folio: string;
     RGI: string;
-    nombre: string;
-    total: string;
-    fecha: string;
-    concepto: string;
+    Nombre: string;
+    Total: string;
+    Fecha: string;
+    Concepto: string;
 }
 
 export const Credito = model<ICredito>('Credito', creditoSchema);
