@@ -7,38 +7,22 @@ exports.Abono = void 0;
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const abonoSchema = new mongoose_1.Schema({
-    usuario: {
+    Folio: {
         type: String,
         unique: true,
-        required: [true, 'El usuario es requerido']
+        required: [true, 'El folio es requerido']
     },
-    password: {
-        type: String,
-        required: [true, 'La contraseña es requerida']
-    },
-    nombre: {
+    Nombre: {
         type: String,
         required: [true, 'El nombre es requerido']
     },
-    apellido: {
+    Fecha: {
         type: String,
-        required: [true, 'El apellido es requerido']
+        required: [true, 'La fecha es requerida']
     },
-    direccion: {
+    Monto: {
         type: String,
-        required: [true, 'La direccion es requerida']
+        required: [true, 'El monto es requerido']
     },
-    telefono: {
-        type: String,
-        required: [true, 'El telefono es requerido']
-    },
-});
-abonoSchema.method('compararPassword', function (password = '') {
-    if (bcrypt_1.default.compareSync(password, this.password)) {
-        return true;
-    }
-    else {
-        return false;
-    }
 });
 exports.Abono = mongoose_1.model('Abono', abonoSchema);

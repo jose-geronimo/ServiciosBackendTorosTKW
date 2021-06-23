@@ -6,20 +6,30 @@ import { verificaToken } from '../middlewares/autenticacion';
 
 const abonoRoutes = Router();
 
-//CREAR USUARIO
-abonoRoutes.post('/create', (req: Request, res: Response) => {
-    const abono = {
-        usuario: req.body.usuario,
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        direccion: req.body.direccion,
-        telefono: req.body.telefono
-    };
 
+//OBTENER ABONO
+abonoRoutes.get('/abonos/:_id', (req, res) => {
+    Abono.find()
+        .then(results => {
+            res.json({
+                results: results
+            });
+        }).catch(error => console.error(error));
+});
+
+
+//ENVIAR EL ABONO
+abonoRoutes.post('/abonos/add', (req, res) => {
+    const abono = {
+        Folio: req.body.Folio,
+        Nombre: req.body.Nombre,
+        Fecha: req.body.Fecha,
+        Monto: req.body.Monto 
+    };
     Abono.create(abono).then(abonoDB => {
         res.json({
             ok: true,
-            abono: abonoDB
+            user: abonoDB
         })
     }).catch(err => {
         res.json({
@@ -27,23 +37,19 @@ abonoRoutes.post('/create', (req: Request, res: Response) => {
             err
         });
     });
-
-
-
-});
-
-//ACTUALIZAR USUARIO
-abonoRoutes.post('/update', verificaToken, (req: any, res: Response) => {
+})
+/*
+//ACTUALIZAR ABONO
+abonoRoutes.post('/update', (req: any, res: Response) => {
 
     const abono = {
-        nombre: req.body.nombre || req.usuario.nombre,
-        apellido: req.body.apellido || req.usuario.apellido,
-        direccion: req.body.direccion || req.usuario.direccion,
-        telefono: req.body.telefono || req.usuario.telefono
-
+        Folio: req.body.folio,
+        Nombre: req.body.Nombre,
+        Fecha: req.body.Fecha,
+        Monto: req.body.Monto 
     };
 
-    Abono.findByIdAndUpdate(req.abono._id, abono, { new: true }, (err, abonoDB) => {
+    Abono.findByIdAndUpdate(req.body._id, abono, { new: true }, (err, abonoDB) => {
 
         if (err) throw err;
 
@@ -53,38 +59,26 @@ abonoRoutes.post('/update', verificaToken, (req: any, res: Response) => {
                 mensaje: 'No existe un abono con ese ID'
             });
         }
-
-        const tokenAbono = Token.getJwtToken({
-            _id: abonoDB._id,
-            usuario: abonoDB.usuario,
-            nombre: abonoDB.nombre,
-            apellido: abonoDB.apellido,
-            direccion: abonoDB.direccion,
-            telefono: abonoDB.telefono
-        });
-
         res.json({
             ok: true,
-            token: tokenAbono
         });
-
-
     });
 });
-
-abonoRoutes.delete('/delete', (req: Request, res: Response) => {
-    const body = req.body._id;
+*/
+//ELIMINAR ABONO
+abonoRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
+    const body = req.params._id;
 
     Abono.findByIdAndDelete({ _id: body }).then(
         result => {
             res.json({
                 ok: true,
-                mensaje: 'abono eliminado'
+                mensaje: 'Abono eliminado'
             });
         }).catch(error => {
                 res.json({
                     ok: false,
-                    mensaje: 'abono no encontrado'
+                    mensaje: 'Abono no encontrado'
                 });
             });
         

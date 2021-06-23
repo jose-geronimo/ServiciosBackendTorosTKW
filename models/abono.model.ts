@@ -2,30 +2,22 @@ import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const abonoSchema: Schema<IAbono> = new Schema({
-    usuario:{
+    Folio:{
         type: String,
         unique: true,
-        required: [true, 'El usuario es requerido']
+        required: [true, 'El folio es requerido']
     },
-    password:{
-        type: String,
-        required: [true, 'La contraseña es requerida']
-    },
-    nombre:{
+    Nombre:{
         type: String,
         required: [true, 'El nombre es requerido']
     },
-    apellido:{
+    Fecha:{
         type: String,
-        required: [true, 'El apellido es requerido']
+        required: [true, 'La fecha es requerida']
     },
-    direccion:{
+    Monto:{
         type: String,
-        required: [true, 'La direccion es requerida']
-    },
-    telefono:{
-        type: String,
-        required: [true, 'El telefono es requerido']
+        required: [true, 'El monto es requerido']
     },
 });
 
@@ -40,12 +32,10 @@ abonoSchema.method('compararPassword', function( password: string = ''): boolean
 });
 
 interface IAbono extends Document{
-    usuario: string;
-    password: string;
-    nombre: string;
-    apellido: string;
-    direccion: string;
-    telefono: string;
+    Folio: string;
+    Nombre: string;
+    Fecha: string;
+    Monto: string;
     compararPassword(password:string):boolean;
 }
 
