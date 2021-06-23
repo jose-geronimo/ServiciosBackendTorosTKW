@@ -4,6 +4,7 @@ import { verificaToken } from '../middlewares/autenticacion';
 
 const clienteRoutes = Router();
 
+//OBTENER CLIENTES
 clienteRoutes.get('/clientes', (req, res) => {
     Clientes.find()
         .then(results => {
@@ -41,7 +42,7 @@ clienteRoutes.post('/add', (req, res) => {
     });
 })
 //ACTUALIZAR CLIENTE
-clienteRoutes.post('/update', (req: any, res: Response) => {
+clienteRoutes.post('/update/:_id', (req: any, res: Response) => {
 
     const client = {
         folio: req.body.folio,
@@ -56,7 +57,7 @@ clienteRoutes.post('/update', (req: any, res: Response) => {
         Mensualidad: req.body.Mensualidad 
     };
 
-    Clientes.findByIdAndUpdate(req.body._id, client, { new: true }, (err, clienteDB) => {
+    Clientes.findByIdAndUpdate(req.params._id, client, { new: true }, (err, clienteDB) => {
 
         if (err) throw err;
 

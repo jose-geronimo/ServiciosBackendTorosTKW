@@ -3,15 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const credito_model_1 = require("../models/credito.model");
 const creditoRoutes = express_1.Router();
+//OBTENER CLIENTES
+creditoRoutes.get('/creditos', (req, res) => {
+    credito_model_1.Credito.find()
+        .then(results => {
+        res.json({
+            results: results
+        });
+    }).catch(error => console.error(error));
+});
 //CREAR CREDITO
 creditoRoutes.post('/add', (req, res) => {
     const credit = {
-        folio: req.body.folio,
+        Folio: req.body.Folio,
         RGI: req.body.RGI,
-        nombre: req.body.nombre,
-        total: req.body.total,
-        fecha: req.body.fecha,
-        concepto: req.body.concepto
+        Nombre: req.body.Nombre,
+        Total: req.body.Total,
+        Fecha: req.body.Fecha,
+        Concepto: req.body.Concepto
     };
     credito_model_1.Credito.create(credit).then(creditoDB => {
         res.json({
@@ -26,16 +35,16 @@ creditoRoutes.post('/add', (req, res) => {
     });
 });
 //ACTUALIZAR CREDITO
-creditoRoutes.post('/update', (req, res) => {
+creditoRoutes.post('/update/:_id', (req, res) => {
     const credito = {
-        folio: req.body.folio,
-        RGI: req.body.folio,
-        nombre: req.body.nombre,
-        total: req.body.total,
-        fecha: req.body.fecha,
-        concepto: req.body.concepto
+        Folio: req.body.Folio,
+        RGI: req.body.RGI,
+        Nombre: req.body.Nombre,
+        Total: req.body.Total,
+        Fecha: req.body.Fecha,
+        Concepto: req.body.Concepto
     };
-    credito_model_1.Credito.findByIdAndUpdate(req.body._id, credito, { new: true }, (err, creditoDB) => {
+    credito_model_1.Credito.findByIdAndUpdate(req.params._id, credito, { new: true }, (err, creditoDB) => {
         if (err)
             throw err;
         if (!creditoDB) {
@@ -50,8 +59,8 @@ creditoRoutes.post('/update', (req, res) => {
         });
     });
 });
-creditoRoutes.delete('/delete', (req, res) => {
-    const body = req.body._id;
+creditoRoutes.delete('/delete/:_id', (req, res) => {
+    const body = req.params._id;
     credito_model_1.Credito.findByIdAndDelete({ _id: body }).then(result => {
         res.json({
             ok: true,

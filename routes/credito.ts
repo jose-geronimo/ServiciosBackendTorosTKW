@@ -4,15 +4,25 @@ import { verificaToken } from '../middlewares/autenticacion';
 
 const creditoRoutes = Router();
 
+//OBTENER CLIENTES
+creditoRoutes.get('/creditos', (req, res) => {
+    Credito.find()
+        .then(results => {
+            res.json({
+                results: results
+            });
+        }).catch(error => console.error(error));
+});
+
 //CREAR CREDITO
 creditoRoutes.post('/add', (req: Request, res: Response) => {
     const credit = {
-        folio: req.body.folio,
+        Folio: req.body.Folio,
         RGI: req.body.RGI,
-        nombre: req.body.nombre,
-        total: req.body.total,
-        fecha: req.body.fecha,
-        concepto: req.body.concepto
+        Nombre: req.body.Nombre,
+        Total: req.body.Total,
+        Fecha: req.body.Fecha,
+        Concepto: req.body.Concepto
     };
     Credito.create(credit).then(creditoDB => {
         res.json({
@@ -27,18 +37,18 @@ creditoRoutes.post('/add', (req: Request, res: Response) => {
     });
 });
 //ACTUALIZAR CREDITO
-creditoRoutes.post('/update', (req: any, res: Response) => {
+creditoRoutes.post('/update/:_id', (req: any, res: Response) => {
 
     const credito = {
-        folio: req.body.folio,
-        RGI: req.body.folio,
-        nombre: req.body.nombre,
-        total: req.body.total,
-        fecha: req.body.fecha,
-        concepto: req.body.concepto
+        Folio: req.body.Folio,
+        RGI: req.body.RGI,
+        Nombre: req.body.Nombre,
+        Total: req.body.Total,
+        Fecha: req.body.Fecha,
+        Concepto: req.body.Concepto
     };
 
-    Credito.findByIdAndUpdate(req.body._id, credito, { new: true }, (err, creditoDB) => {
+    Credito.findByIdAndUpdate(req.params._id, credito, { new: true }, (err, creditoDB) => {
 
         if (err) throw err;
 
@@ -58,8 +68,8 @@ creditoRoutes.post('/update', (req: any, res: Response) => {
     });
 });
 
-creditoRoutes.delete('/delete', (req: Request, res: Response) => {
-    const body = req.body._id;
+creditoRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
+    const body = req.params._id;
 
     Credito.findByIdAndDelete({ _id: body }).then(
         result => {

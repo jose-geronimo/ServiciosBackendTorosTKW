@@ -25,4 +25,12 @@ const abonoSchema = new mongoose_1.Schema({
         required: [true, 'El monto es requerido']
     },
 });
+abonoSchema.method('compararPassword', function (password = '') {
+    if (bcrypt_1.default.compareSync(password, this.password)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+});
 exports.Abono = mongoose_1.model('Abono', abonoSchema);

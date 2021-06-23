@@ -4,6 +4,7 @@ const express_1 = require("express");
 const inventario_model_1 = require("../models/inventario.model");
 //import { verificaToken } from '../middlewares/autenticacion';
 const inventarioRoutes = express_1.Router();
+//OBTENER PRODUCTOS
 inventarioRoutes.get('/inventario', (req, res) => {
     inventario_model_1.Inventario.find()
         .then(results => {
@@ -13,13 +14,13 @@ inventarioRoutes.get('/inventario', (req, res) => {
     }).catch(error => console.error(error));
 });
 //Crear Producto
-inventarioRoutes.post('/add/Inventario', (req, res) => {
+inventarioRoutes.post('/add', (req, res) => {
     const producto = {
-        Folio: req.body.folio,
-        Costo: req.body.RGI,
-        Existencia: req.body.Nombre,
-        Nombre: req.body.FechaIngreso,
-        Precio: req.body.Direccion,
+        Folio: req.body.Folio,
+        Costo: req.body.Costo,
+        Existencia: req.body.Existencia,
+        Nombre: req.body.Nombre,
+        Precio: req.body.Precio
     };
     inventario_model_1.Inventario.create(producto).then(productDB => {
         res.json({
@@ -34,15 +35,15 @@ inventarioRoutes.post('/add/Inventario', (req, res) => {
     });
 });
 //ACTUALIZAR PRODUCTO
-inventarioRoutes.post('/product/', (req, res) => {
+inventarioRoutes.post('/update/:_id', (req, res) => {
     const producto = {
-        Folio: req.body.folio,
-        Costo: req.body.RGI,
-        Existencia: req.body.Nombre,
-        Nombre: req.body.FechaIngreso,
-        Precio: req.body.Direccion,
+        Folio: req.body.Folio,
+        Costo: req.body.Costo,
+        Existencia: req.body.Existencia,
+        Nombre: req.body.Nombre,
+        Precio: req.body.Precio
     };
-    inventario_model_1.Inventario.findByIdAndUpdate(req.body._id, producto, { new: true }, (err, productDB) => {
+    inventario_model_1.Inventario.findByIdAndUpdate(req.params._id, producto, { new: true }, (err, productDB) => {
         if (err)
             throw err;
         if (!productDB) {
@@ -57,8 +58,8 @@ inventarioRoutes.post('/product/', (req, res) => {
     });
 });
 //BORRAR PRODUCTO
-inventarioRoutes.delete('/product/', (req, res) => {
-    const body = req.body._id;
+inventarioRoutes.delete('/product/:_id', (req, res) => {
+    const body = req.params._id;
     inventario_model_1.Inventario.findByIdAndDelete({ _id: body }).then(result => {
         res.json({
             ok: true,

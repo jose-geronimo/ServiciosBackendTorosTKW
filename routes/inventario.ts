@@ -4,6 +4,7 @@ import { Inventario } from '../models/inventario.model';
 
 const inventarioRoutes = Router();
 
+//OBTENER PRODUCTOS
 inventarioRoutes.get('/inventario', (req, res) => {
   Inventario.find()
     .then(
@@ -15,13 +16,13 @@ inventarioRoutes.get('/inventario', (req, res) => {
 });
 
 //Crear Producto
-inventarioRoutes.post('/add/Inventario', (req, res) => {
+inventarioRoutes.post('/add', (req, res) => {
   const producto = {
-    Folio: req.body.folio,
-    Costo: req.body.RGI,
-    Existencia: req.body.Nombre,
-    Nombre: req.body.FechaIngreso,
-    Precio: req.body.Direccion,
+    Folio: req.body.Folio,
+    Costo: req.body.Costo,
+    Existencia: req.body.Existencia,
+    Nombre: req.body.Nombre,
+    Precio: req.body.Precio
   };
   Inventario.create(producto).then(
     productDB => {
@@ -38,16 +39,16 @@ inventarioRoutes.post('/add/Inventario', (req, res) => {
 })
 
 //ACTUALIZAR PRODUCTO
-inventarioRoutes.post('/product/', (req: any, res: Response) => {
+inventarioRoutes.post('/update/:_id', (req: any, res: Response) => {
   const producto = {
-    Folio: req.body.folio,
-    Costo: req.body.RGI,
-    Existencia: req.body.Nombre,
-    Nombre: req.body.FechaIngreso,
-    Precio: req.body.Direccion,
+    Folio: req.body.Folio,
+    Costo: req.body.Costo,
+    Existencia: req.body.Existencia,
+    Nombre: req.body.Nombre,
+    Precio: req.body.Precio
   };  
   
-  Inventario.findByIdAndUpdate(req.body._id, producto, { new: true }, (err, productDB) => {
+  Inventario.findByIdAndUpdate(req.params._id, producto, { new: true }, (err, productDB) => {
 
     if (err) throw err;
 
@@ -64,8 +65,8 @@ inventarioRoutes.post('/product/', (req: any, res: Response) => {
 });
 
 //BORRAR PRODUCTO
-inventarioRoutes.delete('/product/', (req: any, res: Response) => {
-  const body = req.body._id;
+inventarioRoutes.delete('/product/:_id', (req: any, res: Response) => {
+  const body = req.params._id;
 
     Inventario.findByIdAndDelete({ _id: body }).then(
         result => {
