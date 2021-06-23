@@ -1,10 +1,9 @@
 import { model, Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
+
 
 const abonoSchema: Schema<IAbono> = new Schema({
     Folio:{
         type: String,
-        unique: true,
         required: [true, 'El folio es requerido']
     },
     Nombre:{
@@ -21,15 +20,7 @@ const abonoSchema: Schema<IAbono> = new Schema({
     },
 });
 
-abonoSchema.method('compararPassword', function( password: string = ''): boolean {
 
-    if (  bcrypt.compareSync( password, this.password ) ) {
-        return true;
-    } else {
-        return false;
-    }
-
-});
 
 interface IAbono extends Document{
     Folio: string;

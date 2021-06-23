@@ -15,7 +15,7 @@ ventasRoutes.get('/ventas', (req, res) => {
 });
 
 //Crear Venta
-ventasRoutes.post('/add/venta', (req, res) => {
+ventasRoutes.post('/add', (req, res) => {
   const venta = {
     Total: req.body.Total,
     Dia: req.body.Dia,

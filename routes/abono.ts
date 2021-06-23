@@ -8,8 +8,8 @@ const abonoRoutes = Router();
 
 
 //OBTENER ABONO
-abonoRoutes.get('/abonos/:_id', (req, res) => {
-    Abono.find()
+abonoRoutes.get('/abonos/:id', (req, res) => {
+    Abono.find({ "Folio": req.params.id })
         .then(results => {
             res.json({
                 results: results
@@ -19,12 +19,12 @@ abonoRoutes.get('/abonos/:_id', (req, res) => {
 
 
 //ENVIAR EL ABONO
-abonoRoutes.post('/abonos/add', (req, res) => {
+abonoRoutes.post('/add', (req, res) => {
     const abono = {
         Folio: req.body.Folio,
         Nombre: req.body.Nombre,
         Fecha: req.body.Fecha,
-        Monto: req.body.Monto 
+        Monto: req.body.Monto
     };
     Abono.create(abono).then(abonoDB => {
         res.json({
@@ -76,12 +76,12 @@ abonoRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
                 mensaje: 'Abono eliminado'
             });
         }).catch(error => {
-                res.json({
-                    ok: false,
-                    mensaje: 'Abono no encontrado'
-                });
+            res.json({
+                ok: false,
+                mensaje: 'Abono no encontrado'
             });
-        
+        });
+
 });
 
 export default abonoRoutes;

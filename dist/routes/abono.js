@@ -4,8 +4,8 @@ const express_1 = require("express");
 const abono_model_1 = require("../models/abono.model");
 const abonoRoutes = express_1.Router();
 //OBTENER ABONO
-abonoRoutes.get('/abonos/:_id', (req, res) => {
-    abono_model_1.Abono.find()
+abonoRoutes.get('/abonos/:id', (req, res) => {
+    abono_model_1.Abono.find({ "Folio": req.params.id })
         .then(results => {
         res.json({
             results: results
@@ -13,7 +13,7 @@ abonoRoutes.get('/abonos/:_id', (req, res) => {
     }).catch(error => console.error(error));
 });
 //ENVIAR EL ABONO
-abonoRoutes.post('/abonos/add', (req, res) => {
+abonoRoutes.post('/add', (req, res) => {
     const abono = {
         Folio: req.body.Folio,
         Nombre: req.body.Nombre,
