@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Credito = void 0;
 const mongoose_1 = require("mongoose");
 const creditoSchema = new mongoose_1.Schema({
-    folio: {
+    Folio: {
         type: String,
         required: [true, 'El folio es requerido']
     },
@@ -11,19 +11,19 @@ const creditoSchema = new mongoose_1.Schema({
         type: String,
         required: [true, 'El RGI es requerido']
     },
-    nombre: {
+    Nombre: {
         type: String,
         required: [true, 'El nombre es requerido']
     },
-    total: {
+    Total: {
         type: String,
         required: [true, 'El total es requerido']
     },
-    fecha: {
+    Fecha: {
         type: String,
         required: [true, 'La fecha es requerida']
     },
-    concepto: {
+    Concepto: {
         type: String,
         required: [true, 'El concepto es requerido']
     },

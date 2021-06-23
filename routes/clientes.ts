@@ -56,14 +56,14 @@ clienteRoutes.post('/update', (req: any, res: Response) => {
         Mensualidad: req.body.Mensualidad 
     };
 
-    Clientes.findByIdAndUpdate(req.body._id, client, { new: true }, (err, userDB) => {
+    Clientes.findByIdAndUpdate(req.body._id, client, { new: true }, (err, clienteDB) => {
 
         if (err) throw err;
 
-        if (!userDB) {
+        if (!clienteDB) {
             return res.json({
                 ok: false,
-                mensaje: 'No existe un usuario con ese ID'
+                mensaje: 'No existe un cliente con ese ID'
             });
         }
         res.json({
@@ -72,8 +72,8 @@ clienteRoutes.post('/update', (req: any, res: Response) => {
     });
 });
 //ELIMINAR CLIENTE
-clienteRoutes.delete('/delete', (req: Request, res: Response) => {
-    const body = req.body._id;
+clienteRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
+    const body = req.params._id;
 
     Clientes.findByIdAndDelete({ _id: body }).then(
         result => {

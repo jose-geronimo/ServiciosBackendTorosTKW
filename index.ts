@@ -14,13 +14,7 @@ const cors = require('cors');
 server.app.use( bodyParser.urlencoded({ extended: true }));
 server.app.use( bodyParser.json() );
 
-//Rutas de mi app
-server.app.use('/user', userRoutes)
-server.app.use('/credito', creditoRoutes)
-server.app.use('/abono', abonoRoutes)
-server.app.use('/cliente', clienteRoutes)
-server.app.use('/inventario', inventarioRoutes)
-server.app.use('/ventas', ventasRoutes)
+//CORS
 server.app.all("*", (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -29,6 +23,15 @@ server.app.all("*", (req, res, next) => {
     next();
 });
 server.app.use(cors());
+
+//Rutas de mi app
+server.app.use('/user', userRoutes)
+server.app.use('/credito', creditoRoutes)
+server.app.use('/abono', abonoRoutes)
+server.app.use('/cliente', clienteRoutes)
+server.app.use('/inventario', inventarioRoutes)
+server.app.use('/ventas', ventasRoutes)
+
 
 //Conectar la BD
 const uri =
