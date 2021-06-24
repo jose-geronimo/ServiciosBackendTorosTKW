@@ -9,7 +9,7 @@ const userRoutes = Router();
 //LOGIN
 userRoutes.post('/login', (req: Request, res: Response) => {
     const body = req.body;
-    Usuario.findOne({ usuario: body.usuario }, (err: any, userDB: any) => {
+    Usuario.findOne({ usuario: body.username }, (err: any, userDB: any) => {
 
         if (err) throw err;
 
@@ -49,8 +49,19 @@ userRoutes.post('/login', (req: Request, res: Response) => {
 
 });
 
+//GET USUARIOS
+userRoutes.get('/users', (req, res) => {
+    Usuario.find()
+      .then(
+        results => {
+          res.json({
+            results: results
+          });
+        }).catch(error => console.error(error));
+  });
+
 //CREAR USUARIO
-userRoutes.post('/create', (req: Request, res: Response) => {
+userRoutes.post('/create', verificaToken ,(req: Request, res: Response) => {
     const user = {
         usuario: req.body.usuario,
         password: bcrypt.hashSync(req.body.password, 10),
@@ -77,9 +88,10 @@ userRoutes.post('/create', (req: Request, res: Response) => {
 });
 
 //ACTUALIZAR USUARIO
-userRoutes.post('/update', verificaToken, (req: any, res: Response) => {
+userRoutes.post('/update/:_id', verificaToken, (req: any, res: Response) => {
 
     const user = {
+        password: bcrypt.hashSync(req.body.password, 10) || req.usuario.password,
         nombre: req.body.nombre || req.usuario.nombre,
         apellido: req.body.apellido || req.usuario.apellido,
         direccion: req.body.direccion || req.usuario.direccion,
@@ -87,7 +99,7 @@ userRoutes.post('/update', verificaToken, (req: any, res: Response) => {
 
     };
 
-    Usuario.findByIdAndUpdate(req.usuario._id, user, { new: true }, (err, userDB) => {
+    Usuario.findByIdAndUpdate(req.params._id, user, { new: true }, (err, userDB) => {
 
         if (err) throw err;
 
@@ -98,26 +110,26 @@ userRoutes.post('/update', verificaToken, (req: any, res: Response) => {
             });
         }
 
-        const tokenUser = Token.getJwtToken({
+        /*const tokenUser = Token.getJwtToken({
             _id: userDB._id,
             usuario: userDB.usuario,
             nombre: userDB.nombre,
             apellido: userDB.apellido,
             direccion: userDB.direccion,
             telefono: userDB.telefono
-        });
+        });*/
 
         res.json({
-            ok: true,
-            token: tokenUser
+            ok: true
+            //token: tokenUser
         });
 
 
     });
 });
 
-userRoutes.delete('/delete', (req: Request, res: Response) => {
-    const body = req.body._id;
+userRoutes.delete('/delete/:_id', verificaToken, (req: Request, res: Response) => {
+    const body = req.params._id;
 
     Usuario.findByIdAndDelete({ _id: body }).then(
         result => {

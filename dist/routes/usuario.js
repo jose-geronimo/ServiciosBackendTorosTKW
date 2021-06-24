@@ -12,7 +12,7 @@ const userRoutes = express_1.Router();
 //LOGIN
 userRoutes.post('/login', (req, res) => {
     const body = req.body;
-    usuario_model_1.Usuario.findOne({ usuario: body.usuario }, (err, userDB) => {
+    usuario_model_1.Usuario.findOne({ usuario: body.username }, (err, userDB) => {
         if (err)
             throw err;
         if (!userDB) {
@@ -43,8 +43,17 @@ userRoutes.post('/login', (req, res) => {
         }
     });
 });
+//GET USUARIOS
+userRoutes.get('/users', (req, res) => {
+    usuario_model_1.Usuario.find()
+        .then(results => {
+        res.json({
+            results: results
+        });
+    }).catch(error => console.error(error));
+});
 //CREAR USUARIO
-userRoutes.post('/create', (req, res) => {
+userRoutes.post('/create', autenticacion_1.verificaToken, (req, res) => {
     const user = {
         usuario: req.body.usuario,
         password: bcrypt_1.default.hashSync(req.body.password, 10),
@@ -66,14 +75,15 @@ userRoutes.post('/create', (req, res) => {
     });
 });
 //ACTUALIZAR USUARIO
-userRoutes.post('/update', autenticacion_1.verificaToken, (req, res) => {
+userRoutes.post('/update/:_id', autenticacion_1.verificaToken, (req, res) => {
     const user = {
+        password: bcrypt_1.default.hashSync(req.body.password, 10) || req.usuario.password,
         nombre: req.body.nombre || req.usuario.nombre,
         apellido: req.body.apellido || req.usuario.apellido,
         direccion: req.body.direccion || req.usuario.direccion,
         telefono: req.body.telefono || req.usuario.telefono
     };
-    usuario_model_1.Usuario.findByIdAndUpdate(req.usuario._id, user, { new: true }, (err, userDB) => {
+    usuario_model_1.Usuario.findByIdAndUpdate(req.params._id, user, { new: true }, (err, userDB) => {
         if (err)
             throw err;
         if (!userDB) {
@@ -82,22 +92,22 @@ userRoutes.post('/update', autenticacion_1.verificaToken, (req, res) => {
                 mensaje: 'No existe un usuario con ese ID'
             });
         }
-        const tokenUser = token_1.default.getJwtToken({
+        /*const tokenUser = Token.getJwtToken({
             _id: userDB._id,
             usuario: userDB.usuario,
             nombre: userDB.nombre,
             apellido: userDB.apellido,
             direccion: userDB.direccion,
             telefono: userDB.telefono
-        });
+        });*/
         res.json({
-            ok: true,
-            token: tokenUser
+            ok: true
+            //token: tokenUser
         });
     });
 });
-userRoutes.delete('/delete', (req, res) => {
-    const body = req.body._id;
+userRoutes.delete('/delete/:_id', autenticacion_1.verificaToken, (req, res) => {
+    const body = req.params._id;
     usuario_model_1.Usuario.findByIdAndDelete({ _id: body }).then(result => {
         res.json({
             ok: true,
