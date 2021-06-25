@@ -5,7 +5,7 @@ import { verificaToken } from '../middlewares/autenticacion';
 const creditoRoutes = Router();
 
 //OBTENER CLIENTES
-creditoRoutes.get('/creditos', (req, res) => {
+creditoRoutes.get('/creditos', verificaToken, (req, res) => {
     Credito.find()
         .then(results => {
             res.json({
@@ -15,7 +15,7 @@ creditoRoutes.get('/creditos', (req, res) => {
 });
 
 //CREAR CREDITO
-creditoRoutes.post('/add', (req: Request, res: Response) => {
+creditoRoutes.post('/add', verificaToken,(req: Request, res: Response) => {
     const credit = {
         Folio: req.body.Folio,
         RGI: req.body.RGI,
@@ -37,7 +37,7 @@ creditoRoutes.post('/add', (req: Request, res: Response) => {
     });
 });
 //ACTUALIZAR CREDITO
-creditoRoutes.post('/update/:_id', (req: any, res: Response) => {
+creditoRoutes.post('/update/:_id', verificaToken, (req: any, res: Response) => {
 
     const credito = {
         Folio: req.body.Folio,
@@ -68,7 +68,7 @@ creditoRoutes.post('/update/:_id', (req: any, res: Response) => {
     });
 });
 
-creditoRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
+creditoRoutes.delete('/delete/:_id', verificaToken, (req: Request, res: Response) => {
     const body = req.params._id;
 
     Credito.findByIdAndDelete({ _id: body }).then(

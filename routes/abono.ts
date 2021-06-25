@@ -8,7 +8,7 @@ const abonoRoutes = Router();
 
 
 //OBTENER ABONO
-abonoRoutes.get('/abonos/:id', (req, res) => {
+abonoRoutes.get('/abonos/:id', verificaToken, (req, res) => {
     Abono.find({ "Folio": req.params.id })
         .then(results => {
             res.json({
@@ -19,7 +19,7 @@ abonoRoutes.get('/abonos/:id', (req, res) => {
 
 
 //ENVIAR EL ABONO
-abonoRoutes.post('/add', (req, res) => {
+abonoRoutes.post('/add', verificaToken, (req, res) => {
     const abono = {
         Folio: req.body.Folio,
         Nombre: req.body.Nombre,
@@ -66,7 +66,7 @@ abonoRoutes.post('/update', (req: any, res: Response) => {
 });
 */
 //ELIMINAR ABONO
-abonoRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
+abonoRoutes.delete('/delete/:_id', verificaToken, (req: Request, res: Response) => {
     const body = req.params._id;
 
     Abono.findByIdAndDelete({ _id: body }).then(
