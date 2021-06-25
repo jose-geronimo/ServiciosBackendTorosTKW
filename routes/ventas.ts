@@ -1,10 +1,10 @@
 import { Response, Request, Router } from "express";
 import { Ventas } from "../models/ventas.model";
-//import { verificaToken } from '../middlewares/autenticacion';
+import { verificaToken } from '../middlewares/autenticacion';
 
 const ventasRoutes = Router();
 
-ventasRoutes.get('/ventas', (req, res) => {
+ventasRoutes.get('/ventas', verificaToken, (req, res) => {
   Ventas.find()
     .then(
       results => {
@@ -15,7 +15,7 @@ ventasRoutes.get('/ventas', (req, res) => {
 });
 
 //Crear Venta
-ventasRoutes.post('/add', (req, res) => {
+ventasRoutes.post('/add', verificaToken, (req, res) => {
   const venta = {
     Total: req.body.Total,
     Dia: req.body.Dia,

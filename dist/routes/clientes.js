@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const clientes_model_1 = require("../models/clientes.model");
+const autenticacion_1 = require("../middlewares/autenticacion");
 const clienteRoutes = express_1.Router();
 //OBTENER CLIENTES
-clienteRoutes.get('/clientes', (req, res) => {
+clienteRoutes.get('/clientes', autenticacion_1.verificaToken, (req, res) => {
     clientes_model_1.Clientes.find()
         .then(results => {
         res.json({
@@ -13,7 +14,7 @@ clienteRoutes.get('/clientes', (req, res) => {
     }).catch(error => console.error(error));
 });
 //CREAR UN CLIENTE
-clienteRoutes.post('/add', (req, res) => {
+clienteRoutes.post('/add', autenticacion_1.verificaToken, (req, res) => {
     const client = {
         folio: req.body.folio,
         RGI: req.body.RGI,
@@ -39,7 +40,7 @@ clienteRoutes.post('/add', (req, res) => {
     });
 });
 //ACTUALIZAR CLIENTE
-clienteRoutes.post('/update/:_id', (req, res) => {
+clienteRoutes.post('/update/:_id', autenticacion_1.verificaToken, (req, res) => {
     const client = {
         folio: req.body.folio,
         RGI: req.body.RGI,
@@ -67,7 +68,7 @@ clienteRoutes.post('/update/:_id', (req, res) => {
     });
 });
 //ELIMINAR CLIENTE
-clienteRoutes.delete('/delete/:_id', (req, res) => {
+clienteRoutes.delete('/delete/:_id', autenticacion_1.verificaToken, (req, res) => {
     const body = req.params._id;
     clientes_model_1.Clientes.findByIdAndDelete({ _id: body }).then(result => {
         res.json({

@@ -1,11 +1,11 @@
 import { Response, Request, Router } from "express";
 import { Inventario } from '../models/inventario.model';
-//import { verificaToken } from '../middlewares/autenticacion';
+import { verificaToken } from '../middlewares/autenticacion';
 
 const inventarioRoutes = Router();
 
 //OBTENER PRODUCTOS
-inventarioRoutes.get('/inventario', (req, res) => {
+inventarioRoutes.get('/inventario', verificaToken, (req, res) => {
   Inventario.find()
     .then(
       results => {
@@ -16,7 +16,7 @@ inventarioRoutes.get('/inventario', (req, res) => {
 });
 
 //Crear Producto
-inventarioRoutes.post('/add', (req, res) => {
+inventarioRoutes.post('/add', verificaToken, (req, res) => {
   const producto = {
     Folio: req.body.Folio,
     Costo: req.body.Costo,
@@ -39,7 +39,7 @@ inventarioRoutes.post('/add', (req, res) => {
 })
 
 //ACTUALIZAR PRODUCTO
-inventarioRoutes.post('/update/:_id', (req: any, res: Response) => {
+inventarioRoutes.post('/update/:_id', verificaToken, (req: any, res: Response) => {
   const producto = {
     Folio: req.body.Folio,
     Costo: req.body.Costo,
@@ -65,7 +65,7 @@ inventarioRoutes.post('/update/:_id', (req: any, res: Response) => {
 });
 
 //BORRAR PRODUCTO
-inventarioRoutes.delete('/product/:_id', (req: any, res: Response) => {
+inventarioRoutes.delete('/product/:_id', verificaToken, (req: any, res: Response) => {
   const body = req.params._id;
 
     Inventario.findByIdAndDelete({ _id: body }).then(

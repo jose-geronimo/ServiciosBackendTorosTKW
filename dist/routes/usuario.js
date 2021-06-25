@@ -44,7 +44,7 @@ userRoutes.post('/login', (req, res) => {
     });
 });
 //GET USUARIOS
-userRoutes.get('/users', (req, res) => {
+userRoutes.get('/users', autenticacion_1.verificaToken, (req, res) => {
     usuario_model_1.Usuario.find()
         .then(results => {
         res.json({

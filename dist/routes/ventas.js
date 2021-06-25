@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ventas_model_1 = require("../models/ventas.model");
-//import { verificaToken } from '../middlewares/autenticacion';
+const autenticacion_1 = require("../middlewares/autenticacion");
 const ventasRoutes = express_1.Router();
-ventasRoutes.get('/ventas', (req, res) => {
+ventasRoutes.get('/ventas', autenticacion_1.verificaToken, (req, res) => {
     ventas_model_1.Ventas.find()
         .then(results => {
         res.json({
@@ -13,7 +13,7 @@ ventasRoutes.get('/ventas', (req, res) => {
     }).catch(error => console.error(error));
 });
 //Crear Venta
-ventasRoutes.post('/add', (req, res) => {
+ventasRoutes.post('/add', autenticacion_1.verificaToken, (req, res) => {
     const venta = {
         Total: req.body.Total,
         Dia: req.body.Dia,

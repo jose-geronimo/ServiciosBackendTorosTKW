@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const abono_model_1 = require("../models/abono.model");
+const autenticacion_1 = require("../middlewares/autenticacion");
 const abonoRoutes = express_1.Router();
 //OBTENER ABONO
-abonoRoutes.get('/abonos/:id', (req, res) => {
+abonoRoutes.get('/abonos/:id', autenticacion_1.verificaToken, (req, res) => {
     abono_model_1.Abono.find({ "Folio": req.params.id })
         .then(results => {
         res.json({
@@ -13,7 +14,7 @@ abonoRoutes.get('/abonos/:id', (req, res) => {
     }).catch(error => console.error(error));
 });
 //ENVIAR EL ABONO
-abonoRoutes.post('/add', (req, res) => {
+abonoRoutes.post('/add', autenticacion_1.verificaToken, (req, res) => {
     const abono = {
         Folio: req.body.Folio,
         Nombre: req.body.Nombre,
@@ -60,7 +61,7 @@ abonoRoutes.post('/update', (req: any, res: Response) => {
 });
 */
 //ELIMINAR ABONO
-abonoRoutes.delete('/delete/:_id', (req, res) => {
+abonoRoutes.delete('/delete/:_id', autenticacion_1.verificaToken, (req, res) => {
     const body = req.params._id;
     abono_model_1.Abono.findByIdAndDelete({ _id: body }).then(result => {
         res.json({

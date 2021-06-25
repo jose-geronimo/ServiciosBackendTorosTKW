@@ -5,7 +5,7 @@ import { verificaToken } from '../middlewares/autenticacion';
 const clienteRoutes = Router();
 
 //OBTENER CLIENTES
-clienteRoutes.get('/clientes', (req, res) => {
+clienteRoutes.get('/clientes', verificaToken, (req, res) => {
     Clientes.find()
         .then(results => {
             res.json({
@@ -16,7 +16,7 @@ clienteRoutes.get('/clientes', (req, res) => {
 
 
 //CREAR UN CLIENTE
-clienteRoutes.post('/add', (req, res) => {
+clienteRoutes.post('/add', verificaToken, (req, res) => {
     const client = {
         folio: req.body.folio,
         RGI: req.body.RGI,
@@ -42,7 +42,7 @@ clienteRoutes.post('/add', (req, res) => {
     });
 })
 //ACTUALIZAR CLIENTE
-clienteRoutes.post('/update/:_id', (req: any, res: Response) => {
+clienteRoutes.post('/update/:_id', verificaToken, (req: any, res: Response) => {
 
     const client = {
         folio: req.body.folio,
@@ -73,7 +73,7 @@ clienteRoutes.post('/update/:_id', (req: any, res: Response) => {
     });
 });
 //ELIMINAR CLIENTE
-clienteRoutes.delete('/delete/:_id', (req: Request, res: Response) => {
+clienteRoutes.delete('/delete/:_id', verificaToken, (req: Request, res: Response) => {
     const body = req.params._id;
 
     Clientes.findByIdAndDelete({ _id: body }).then(

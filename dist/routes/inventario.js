@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const inventario_model_1 = require("../models/inventario.model");
-//import { verificaToken } from '../middlewares/autenticacion';
+const autenticacion_1 = require("../middlewares/autenticacion");
 const inventarioRoutes = express_1.Router();
 //OBTENER PRODUCTOS
-inventarioRoutes.get('/inventario', (req, res) => {
+inventarioRoutes.get('/inventario', autenticacion_1.verificaToken, (req, res) => {
     inventario_model_1.Inventario.find()
         .then(results => {
         res.json({
@@ -14,7 +14,7 @@ inventarioRoutes.get('/inventario', (req, res) => {
     }).catch(error => console.error(error));
 });
 //Crear Producto
-inventarioRoutes.post('/add', (req, res) => {
+inventarioRoutes.post('/add', autenticacion_1.verificaToken, (req, res) => {
     const producto = {
         Folio: req.body.Folio,
         Costo: req.body.Costo,
@@ -35,7 +35,7 @@ inventarioRoutes.post('/add', (req, res) => {
     });
 });
 //ACTUALIZAR PRODUCTO
-inventarioRoutes.post('/update/:_id', (req, res) => {
+inventarioRoutes.post('/update/:_id', autenticacion_1.verificaToken, (req, res) => {
     const producto = {
         Folio: req.body.Folio,
         Costo: req.body.Costo,
@@ -58,7 +58,7 @@ inventarioRoutes.post('/update/:_id', (req, res) => {
     });
 });
 //BORRAR PRODUCTO
-inventarioRoutes.delete('/product/:_id', (req, res) => {
+inventarioRoutes.delete('/product/:_id', autenticacion_1.verificaToken, (req, res) => {
     const body = req.params._id;
     inventario_model_1.Inventario.findByIdAndDelete({ _id: body }).then(result => {
         res.json({

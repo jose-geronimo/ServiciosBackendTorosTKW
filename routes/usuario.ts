@@ -50,7 +50,7 @@ userRoutes.post('/login', (req: Request, res: Response) => {
 });
 
 //GET USUARIOS
-userRoutes.get('/users', (req, res) => {
+userRoutes.get('/users', verificaToken, (req, res) => {
     Usuario.find()
       .then(
         results => {
