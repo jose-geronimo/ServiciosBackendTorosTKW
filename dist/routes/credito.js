@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const credito_model_1 = require("../models/credito.model");
+const autenticacion_1 = require("../middlewares/autenticacion");
 const creditoRoutes = express_1.Router();
 //OBTENER CLIENTES
-creditoRoutes.get('/creditos', (req, res) => {
+creditoRoutes.get('/creditos', autenticacion_1.verificaToken, (req, res) => {
     credito_model_1.Credito.find()
         .then(results => {
         res.json({
@@ -13,7 +14,7 @@ creditoRoutes.get('/creditos', (req, res) => {
     }).catch(error => console.error(error));
 });
 //CREAR CREDITO
-creditoRoutes.post('/add', (req, res) => {
+creditoRoutes.post('/add', autenticacion_1.verificaToken, (req, res) => {
     const credit = {
         Folio: req.body.Folio,
         RGI: req.body.RGI,
@@ -35,7 +36,7 @@ creditoRoutes.post('/add', (req, res) => {
     });
 });
 //ACTUALIZAR CREDITO
-creditoRoutes.post('/update/:_id', (req, res) => {
+creditoRoutes.post('/update/:_id', autenticacion_1.verificaToken, (req, res) => {
     const credito = {
         Folio: req.body.Folio,
         RGI: req.body.RGI,
@@ -59,7 +60,7 @@ creditoRoutes.post('/update/:_id', (req, res) => {
         });
     });
 });
-creditoRoutes.delete('/delete/:_id', (req, res) => {
+creditoRoutes.delete('/delete/:_id', autenticacion_1.verificaToken, (req, res) => {
     const body = req.params._id;
     credito_model_1.Credito.findByIdAndDelete({ _id: body }).then(result => {
         res.json({
