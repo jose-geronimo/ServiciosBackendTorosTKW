@@ -22,7 +22,8 @@ ventasRoutes.post('/add', verificaToken, (req, res) => {
     Mes: req.body.Mes,
     Año: req.body.Año,
     Vendedor: req.body.Vendedor,
-    Efectivo: req.body.Efectivo
+    Efectivo: req.body.Efectivo,
+    Cliente: req.body.Cliente
   };
 
   Ventas.create(venta).then(

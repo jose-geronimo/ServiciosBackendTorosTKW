@@ -24,6 +24,10 @@ const ventasSchema: Schema<IVentas> = new Schema({
     Efectivo:{
         type: String,
         required: [true, 'El Efectivo es requerido']
+    },
+    Cliente:{
+        type: String,
+        required: [true, 'El Cliente es requerido']
     }
 });
 
@@ -34,6 +38,7 @@ interface IVentas extends Document{
     Año: string;
     Vendedor: string;
     Efectivo: string;
+    Cliente: string;
 }
 
 export const Ventas = model<IVentas>('Ventas', ventasSchema);

@@ -20,7 +20,8 @@ ventasRoutes.post('/add', autenticacion_1.verificaToken, (req, res) => {
         Mes: req.body.Mes,
         Año: req.body.Año,
         Vendedor: req.body.Vendedor,
-        Efectivo: req.body.Efectivo
+        Efectivo: req.body.Efectivo,
+        Cliente: req.body.Cliente
     };
     ventas_model_1.Ventas.create(venta).then(ventaDB => {
         res.json({

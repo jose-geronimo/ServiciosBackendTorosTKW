@@ -26,6 +26,10 @@ const ventasSchema = new mongoose_1.Schema({
     Efectivo: {
         type: String,
         required: [true, 'El Efectivo es requerido']
+    },
+    Cliente: {
+        type: String,
+        required: [true, 'El Cliente es requerido']
     }
 });
 exports.Ventas = mongoose_1.model('Ventas', ventasSchema);
